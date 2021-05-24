@@ -38,6 +38,7 @@ import 'package:data/src/network/config/endpoint.dart';
 import 'package:data/src/network/linshare_download_manager.dart';
 import 'package:data/src/network/linshare_http_client.dart';
 import 'package:data/src/network/remote_exception_thrower.dart';
+import 'package:data/src/extensions/string_extension.dart';
 import 'package:data/src/util/constant.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/domain.dart';
@@ -113,7 +114,7 @@ class ReceivedShareDataSourceImpl extends ReceivedShareDataSource {
     return _linShareDownloadManager.downloadFile(
         downloadUrl,
         getTemporaryDirectory(),
-        receivedShare.name + '${downloadPreviewType == DownloadPreviewType.thumbnail ? '.pdf' : ''}',
+        receivedShare.name.decodeHtmlString() + '${downloadPreviewType == DownloadPreviewType.thumbnail ? '.pdf' : ''}',
         permanentToken,
         cancelToken: cancelToken);
   }

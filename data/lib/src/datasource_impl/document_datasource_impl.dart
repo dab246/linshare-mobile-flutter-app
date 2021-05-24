@@ -44,6 +44,7 @@ import 'package:data/src/network/model/share/mailing_list_id_dto.dart';
 import 'package:data/src/network/model/share/share_dto.dart';
 import 'package:data/src/network/model/share/share_id_dto.dart';
 import 'package:data/src/network/remote_exception_thrower.dart';
+import 'package:data/src/extensions/string_extension.dart';
 import 'package:data/src/util/constant.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/domain.dart';
@@ -131,7 +132,7 @@ class DocumentDataSourceImpl implements DocumentDataSource {
             .downloadServicePath(document.documentId.uuid)
             .generateDownloadUrl(baseUrl),
         getTemporaryDirectory(),
-        document.name,
+        document.name.decodeHtmlString(),
         permanentToken,
         cancelToken: cancelToken);
   }
@@ -187,7 +188,7 @@ class DocumentDataSourceImpl implements DocumentDataSource {
     return _linShareDownloadManager.downloadFile(
         downloadUrl,
         getTemporaryDirectory(),
-        document.name + '${downloadPreviewType == DownloadPreviewType.thumbnail ? '.pdf' : ''}',
+        document.name.decodeHtmlString() + '${downloadPreviewType == DownloadPreviewType.thumbnail ? '.pdf' : ''}',
         permanentToken,
         cancelToken: cancelToken);
   }

@@ -41,6 +41,7 @@ import 'package:data/src/network/model/request/create_shared_space_node_folder_r
 import 'package:data/src/network/model/sharedspacedocument/work_group_document_dto.dart';
 import 'package:data/src/network/model/sharedspacedocument/work_group_folder_dto.dart';
 import 'package:data/src/util/constant.dart';
+import 'package:data/src/extensions/string_extension.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/domain.dart';
 import 'package:domain/src/model/sharedspace/shared_space_id.dart';
@@ -179,7 +180,7 @@ class SharedSpaceDocumentDataSourceImpl implements SharedSpaceDocumentDataSource
             .downloadServicePath(workgroupNode.workGroupNodeId.uuid)
             .generateDownloadUrl(baseUrl),
         getTemporaryDirectory(),
-        workgroupNode.name,
+        workgroupNode.name.decodeHtmlString(),
         token,
         cancelToken: cancelToken);
   }
@@ -227,7 +228,7 @@ class SharedSpaceDocumentDataSourceImpl implements SharedSpaceDocumentDataSource
     return _linShareDownloadManager.downloadFile(
         downloadUrl,
         getTemporaryDirectory(),
-        workGroupDocument.name +
+        workGroupDocument.name.decodeHtmlString() +
             '${downloadPreviewType == DownloadPreviewType.thumbnail ? '.pdf' : ''}',
         token,
         cancelToken: cancelToken);
